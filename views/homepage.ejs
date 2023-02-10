@@ -9,18 +9,36 @@
     </header>
     
     <main>
-        <h1>Notes</h1>
-        <ul>
-            <% for(var i = 0; i < noteTitle.length; i++) {
-                <li><% noteTitle[i] %></li>
-            <% } %>
-            <% for(var i = 0; i < noteContent.length; i++) {
-                <li><% noteContent[i] %></li>
-            <% } %>
-            <% for(var i = 0; i < tag.length; i++) {
-                <li><% tag[i] %></li>
-            <% } %>
-        </ul>
+        <div class="col-sm-4">
+            <h1>Notes</h1>
+            <ul>
+                <% for(var i = 0; i < noteTitle.length; i++) {
+                    <li><% noteTitle[i] %></li>
+                <% } %>
+                <% for(var i = 0; i < noteContent.length; i++) {
+                    <li><% noteContent[i] %></li>
+                <% } %>
+                <% for(var i = 0; i < tag.length; i++) {
+                    <li><% tag[i] %></li>
+                <% } %>
+            </ul>
+        </div>
+        
+        <div class="col-sm-8">
+            <form class="note-form">
+                <div class="well">
+                    <div class="note-title">
+                        <label for="title">Note Title</label>
+                        <input name="title"/>
+                    </div>
+                    <textarea name="note-body"></textarea>
+                </div>
+                <div>
+                    <button type="submit">Add Note</button>
+                </div>
+            </form>
+            
+        </div>
     </main>
 
     <footer>
