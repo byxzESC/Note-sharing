@@ -5,50 +5,50 @@ const TagNote = require("./TagNote");
 
 // User
 Note.belongsToMany(User, {
-	foreignKey: "user_id",
-	as: "sharedNotes",
-	through: "shared_note",
+  foreignKey: "user_id",
+  as: "sharedNotes",
+  through: "shared_note",
 });
 
 User.belongsToMany(Note, {
-	foreignKey: "user_id",
-	onDelete: "CASCADE",
-	as: "sharedNotes",
-	through: "shared_note",
+  foreignKey: "user_id",
+  onDelete: "CASCADE",
+  as: "sharedNotes",
+  through: "shared_note",
 });
 
 User.hasMany(Note, {
-	foreignKey: "user_id",
-	onDelete: "CASCADE",
-	as: "notes",
+  foreignKey: "user_id",
+  onDelete: "CASCADE",
+  as: "notes",
 });
 
 Note.belongsTo(User, {
-	foreignKey: "user_id",
-	as: "notes",
+  foreignKey: "user_id",
+  as: "notes",
 });
 
 User.hasMany(Tag, {
-	foreignKey: "user_id",
-	onDelete: "CASCADE",
+  foreignKey: "user_id",
+  onDelete: "CASCADE",
 });
 
 Tag.belongsTo(User, {
-	foreignKey: "user_id",
+  foreignKey: "user_id",
 });
 
 // Note
 // not sure foreign key
 Tag.belongsToMany(Note, {
-	through: "tag_note",
-	as: "notes",
-	foreignKey: "tag_id",
+  through: "tag_note",
+  as: "notes",
+  foreignKey: "tag_id",
 });
 
 Note.belongsToMany(Tag, {
-	through: "tag_note",
-	as: "tags",
-	foreignKey: "note_id",
+  through: "tag_note",
+  as: "tags",
+  foreignKey: "note_id",
 });
 
 module.exports = { User, Note, Tag };
