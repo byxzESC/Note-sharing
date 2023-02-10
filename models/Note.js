@@ -22,11 +22,6 @@ Note.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    created_at: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW
-    },
     user_id: {
         type:DataTypes.INTEGER,
         allowNull: false,
@@ -38,6 +33,7 @@ Note.init(
   },
   {
     sequelize,
+    // for create time and update time
     timestamps: true,
     freezeTableName: true,
     underscored: true,
@@ -46,3 +42,16 @@ Note.init(
 );
 
 module.exports = Note;
+
+
+// created_at: {
+//   type: DataTypes.DATE,
+//   allowNull: false,
+//   defaultValue: sequelize.literal("CURRENT_TIMESTAMP")
+// },
+// update_at: {
+// type: DataTypes.DATE,
+// defaultValue: sequelize.literal(
+//   "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
+// ),
+// },
