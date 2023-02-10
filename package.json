@@ -1,0 +1,23 @@
+{
+  "name": "note-sharing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/byxzESC/Note-sharing.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/byxzESC/Note-sharing/issues"
+  },
+  "homepage": "https://github.com/byxzESC/Note-sharing#readme",
+  "dependencies": {
+    "ejs": "^3.1.8"
+  }
+}
