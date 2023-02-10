@@ -1,27 +1,44 @@
+
 const User = require('./User');
 const Note = require('./Note');
 const Tag = require('./Tag');
 const TagNote = require('./TagNote');
 const UserNote = require('./UserNote');
 
+
 // User
+Note.belongsToMany(User, {
+  foreignKey: "user_id",
+  as: "sharedNotes",
+  through: "shared_note",
+});
+
+User.belongsToMany(Note, {
+  foreignKey: "user_id",
+  onDelete: "CASCADE",
+  as: "sharedNotes",
+  through: "shared_note",
+});
+
 User.hasMany(Note, {
-    foreignKey: 'user_id',
-    onDelete: 'CASCADE'
+  foreignKey: "user_id",
+  onDelete: "CASCADE",
+  as: "notes",
 });
 
 Note.belongsTo(User, {
-    foreignKey: 'user_id',
+  foreignKey: "user_id",
+  as: "notes",
 });
 
 User.hasMany(Tag, {
-    foreignKey: 'user_id',
-    onDelete: 'CASCADE'
-})
+  foreignKey: "user_id",
+  onDelete: "CASCADE",
+});
 
 Tag.belongsTo(User, {
-    foreignKey: 'user_id',
-})
+  foreignKey: "user_id",
+});
 
 // UserNote manyToMany relationship
 User.hasMany(Note, {
@@ -49,4 +66,4 @@ Note.hasMany(Tag, {
     foreignKey: 'note_id',
 });
 
-module.exports = { User, Note, Tag}
+module.exports = { User, Note, Tag };
