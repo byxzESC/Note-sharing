@@ -3,7 +3,8 @@ const apiRoutes = require("./api");
 const homepageRoutes = require("./homepageRoutes");
 
 router.get("/", (req, res) => {
-  res.render("index");
+  res.render("layouts/main", {loggedIn: true});
+
 });
 
 router.use("/", homepageRoutes);
