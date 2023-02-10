@@ -23,13 +23,13 @@ Note.init(
       allowNull: false,
     },
     user_id: {
-        type:DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'user',
-            key: 'id'
-        }
-    }
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "user",
+        key: "id",
+      },
+    },
   },
   {
     sequelize,
@@ -37,12 +37,11 @@ Note.init(
     timestamps: true,
     freezeTableName: true,
     underscored: true,
-    modelName: 'note',
+    modelName: "note",
   }
 );
 
 module.exports = Note;
-
 
 // created_at: {
 //   type: DataTypes.DATE,
