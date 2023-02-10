@@ -5,27 +5,20 @@ const session = require("express-session");
 const sequelize = require("./config/connection");
 const Store = require("connect-session-sequelize")(session.Store);
 const sessionConfig = {
-	secret: process.env.SESSION_SECRET,
-	resave: false,
-	cookie: {
-		maxAge: 1000 * 60 * 60 * 24 * 7,
-	},
-	saveUninitialized: false,
-	store: new Store({
-		db: sequelize,
-	}),
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+  },
+  saveUninitialized: false,
+  store: new Store({
+    db: sequelize,
+  }),
 };
 
 const app = express();
 const port = process.env.PORT;
-app.use((req, res, next) => {
-	try {
-		next();
-	} catch (err) {
-		console.log(err);
-		res.status(500).json(err);
-	}
-});
+
 app.set("view engine", "ejs");
 app.set("views", "./views");
 
@@ -38,7 +31,7 @@ app.use(session(sessionConfig));
 app.use("/", require("./controllers"));
 
 sequelize.sync({ force: false }).then(() => {
-	app.listen(port, () => {
-		console.log(`Server listening on port ${port}`);
-	});
+  app.listen(port, () => {
+    console.log(`Server listening on port ${port}`);
+  });
 });

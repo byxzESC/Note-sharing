@@ -36,26 +36,29 @@ User.init(
       },
     },
     theme: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: null
-    }
+      type: DataTypes.BOOLEAN,
+      defaultValue: null,
+    },
   },
   {
     hooks: {
-        beforeCreate: async (newUserData) => {
-            newUserData.password = await bcrypt.hash(newUserData, 10);
-            return newUserData;
-        },
-        beforeUpdate: async (updateUserData) => {
-            updateUserData.password = await bcrypt.hash(updateUserData, 10);
-            return updateUserData;
-        }
+      beforeCreate: async (newUserData) => {
+        newUserData.password = await bcrypt.hash(newUserData.password, 10);
+        return newUserData;
+      },
+      beforeUpdate: async (updateUserData) => {
+        updateUserData.password = await bcrypt.hash(
+          updateUserData.password,
+          10
+        );
+        return updateUserData;
+      },
     },
     sequelize,
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'user',
+    modelName: "user",
   }
 );
 
