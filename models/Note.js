@@ -25,7 +25,13 @@ Note.init(
     created_at: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: DataTypes.NOW
+        defaultValue: sequelize.literal("CURRENT_TIMESTAMP")
+    },
+    update_at: {
+      type: DataTypes.DATE,
+      defaultValue: sequelize.literal(
+        "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
+      ),
     },
     user_id: {
         type:DataTypes.INTEGER,
