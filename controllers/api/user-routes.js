@@ -64,3 +64,5 @@ router.post("/", async (req, res) => {  // create a new user with the req.body v
       res.status(404).end(); 
     } 
   });
+
+  module.exports = router;
