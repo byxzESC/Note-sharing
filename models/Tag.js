@@ -16,15 +16,16 @@ Tag.init(
       allowNull: false,
     },
     darkColor: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     message: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     filledIn: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
     },
   },
   {
@@ -32,7 +33,7 @@ Tag.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'tag',
+    modelName: "tag",
   }
 );
 
