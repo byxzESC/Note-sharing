@@ -1,0 +1,28 @@
+ <!-- <h1>
+            Registration
+        </h1>
+        <% if(isLoggedIn) { %>
+        <h2><%= user.name %></h2>
+        <% } %>
+        <% if(isLoggedIn) { %>
+            <nav><%= log in %></nav>
+        <%} else {%>
+            <nav><%= log out %></nav>    
+        <% } %> -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">Note Sharing</a>
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+        </li>
+        <% if (isLoggedIn) { %>
+         <li class="nav-item">
+            <a class="nav-link" href="/login">Login</a>
+         </li>
+        <% } else {%>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Log out</a>
+            </li>
+        <% } %>
+    </ul>
+</nav>
