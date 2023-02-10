@@ -13,15 +13,15 @@
     <a class="navbar-brand" href="/">Note Sharing</a>
     <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link" href="/homepage">Home</a>
         </li>
-        <% if (isLoggedIn) { %>
+        <% if (!isLoggedIn) { %>
          <li class="nav-item">
             <a class="nav-link" href="/login">Login</a>
          </li>
         <% } else {%>
             <li class="nav-item">
-                <a class="nav-link" href="/logout">Log out</a>
+                <a class="nav-link" href="/">Log out</a>
             </li>
         <% } %>
     </ul>
