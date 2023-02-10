@@ -2,6 +2,7 @@ const User = require('./User');
 const Note = require('./Note');
 const Tag = require('./Tag');
 const TagNote = require('./TagNote');
+const UserNote = require('./UserNote');
 
 // User
 User.hasMany(Note, {
@@ -22,17 +23,29 @@ Tag.belongsTo(User, {
     foreignKey: 'user_id',
 })
 
-// Note
-// not sure foreign key
+// UserNote manyToMany relationship
+User.hasMany(Note, {
+    through: 'user_note',
+    as: 'note',
+    foreignKey: 'user_id',
+});
+
+Note.hasMany(User, {
+    through: 'user_note',
+    as: 'user',
+    foreignKey: 'note_id',
+});
+
+// TagNote manyToMany relationship
 Tag.hasMany(Note, {
     through: 'tag_note',
-    as: 'notes',
+    as: 'note',
     foreignKey: 'tag_id',
 });
 
 Note.hasMany(Tag, {
     through: 'tag_note',
-    as: 'tags',
+    as: 'tag',
     foreignKey: 'note_id',
 });
 
