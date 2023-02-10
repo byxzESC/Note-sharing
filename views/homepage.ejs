@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/header') %>
+</head>
+<body>
+    <header class="display-flex justify-space-between align-center p-2">
+        <%- include('../partials/header'); %>
+    </header>
+    
+    <main>
+        <h1>Notes</h1>
+        <ul>
+            <% for(var i = 0; i < noteTitle.length; i++) {
+                <li><% noteTitle[i] %></li>
+            <% } %>
+            <% for(var i = 0; i < noteContent.length; i++) {
+                <li><% noteContent[i] %></li>
+            <% } %>
+            <% for(var i = 0; i < tag.length; i++) {
+                <li><% tag[i] %></li>
+            <% } %>
+        </ul>
+    </main>
+
+    <footer>
+        <%- include('../partials/footer') %>
+    </footer>
+</body>
+</html>

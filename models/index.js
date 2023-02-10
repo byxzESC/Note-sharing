@@ -1,6 +1,7 @@
 const User = require('./User');
 const Note = require('./Note');
 const Tag = require('./Tag');
+const TagNote = require('./TagNote');
 
 // User
 User.hasMany(Note, {
@@ -23,12 +24,16 @@ Tag.belongsTo(User, {
 
 // Note
 // not sure foreign key
-Note.hasMany(Tag, {
-    foreignKey: 'note_id'
+Tag.hasMany(Note, {
+    through: 'tag_note',
+    as: 'notes',
+    foreignKey: 'tag_id',
 });
 
-Tag.hasMany(Note, {
-    foreignKey: 'note_id'
+Note.hasMany(Tag, {
+    through: 'tag_note',
+    as: 'tags',
+    foreignKey: 'note_id',
 });
 
 module.exports = { User, Note, Tag}
