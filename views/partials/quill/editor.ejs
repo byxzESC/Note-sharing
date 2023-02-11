@@ -10,7 +10,7 @@
     loadEditor("#editor-<%- id %>", "#content-<%- id %>");
   } else {
     globalThis.editors.push(() => {
-      loadEditor("#editor-<%- id %>", "#content-<%- id %>");
+      loadEditor("#editor-<%- id %>", "#content-<%- id %>",<%- editCallback || "()=>{}" %>);
     });
   }
 </script>

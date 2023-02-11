@@ -1,4 +1,4 @@
-function loadEditor(mountId, dataId, onChange) {
+function loadEditor(mountId, dataId, onChange = console.log) {
   const mount = document.querySelector(mountId);
   const data = document.querySelector(dataId);
   const parsedData = JSON.parse(data.innerHTML);
@@ -8,6 +8,10 @@ function loadEditor(mountId, dataId, onChange) {
   });
 
   editor.setContents(parsedData);
+
+  editor.on("text-change", () => {
+    onChange(editor.getContents());
+  });
 }
 
 globalThis.editors = globalThis.editors || [];
