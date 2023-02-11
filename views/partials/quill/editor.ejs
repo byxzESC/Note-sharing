@@ -5,7 +5,12 @@
   <%- note.content %>
 </script>
 <script>
-  window.addEventListener("DOMContentLoaded", () => {
-    loadEditor("#editor-<%- id %>", "<%- note.id %>");
-  });
+  globalThis.editors = globalThis.editors || [];
+  if (globalThis.editorInitialized) {
+    loadEditor("#editor-<%- id %>", "#content-<%- id %>");
+  } else {
+    globalThis.editors.push(() => {
+      loadEditor("#editor-<%- id %>", "#content-<%- id %>");
+    });
+  }
 </script>
