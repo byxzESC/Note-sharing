@@ -42,15 +42,3 @@ Note.init(
 );
 
 module.exports = Note;
-
-// created_at: {
-//   type: DataTypes.DATE,
-//   allowNull: false,
-//   defaultValue: sequelize.literal("CURRENT_TIMESTAMP")
-// },
-// update_at: {
-// type: DataTypes.DATE,
-// defaultValue: sequelize.literal(
-//   "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
-// ),
-// },

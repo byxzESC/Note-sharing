@@ -2,20 +2,35 @@ const User = require("./User");
 const Note = require("./Note");
 const Tag = require("./Tag");
 const TagNote = require("./TagNote");
-const UserNote = require("./UserNote");
+const SharedUsers = require("./SharedUsers");
 
 // Share notes
 Note.belongsToMany(User, {
   foreignKey: "user_id", // establishes the foreign key for the associating table
-  as: "sharedNotes", // table name to be used in the population of queried data
-  through: "shared_note", // interim join table name
+  as: "sharedUsers", // table name to be used in the population of queried data
+  through: "SharedUsers", // interim join table name
 });
 
 User.belongsToMany(Note, {
   foreignKey: "user_id",
   onDelete: "CASCADE", 
-  as: "sharedNotes",
-  through: "shared_note",
+  as: "sharedUsers",
+  through: "SharedUsers",
+});
+
+// note has many tags, and tag has many notes 
+// Define the belongsToMany association between the Note and Tag models,
+// which gives us access to both the associations between notes and tags, and vice versa
+Note.belongsToMany(Tag, {
+  through: "tag_note",
+  as: "tags",
+  foreignKey: "note_id",
+});
+
+Tag.belongsToMany(Note, {
+  through: "tag_note",
+  as: "notes",
+  foreignKey: "tag_id",
 });
 
 // owner of notes
@@ -44,19 +59,4 @@ Tag.belongsTo(User, {
   foreignKey: "user_id",
 });
 
-// note has many tags, and tag has many notes 
-// Define the belongsToMany association between the Note and Tag models,
-// which gives us access to both the associations between notes and tags, and vice versa
-Note.belongsToMany(Tag, {
-  through: "tag_note",
-  as: "tag",
-  foreignKey: "note_id",
-});
-
-Tag.belongsToMany(Note, {
-  through: "tag_note",
-  as: "note",
-  foreignKey: "tag_id",
-});
-
-module.exports = { User, Note, Tag, TagNote, UserNote };
+module.exports = { User, Note, Tag, TagNote, SharedUsers };
