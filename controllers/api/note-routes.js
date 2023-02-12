@@ -5,8 +5,8 @@ router.get("/get/:id", async (req, res) => {
   try {
     const note = await Note.findByPk(req.params.id, {
       include: [
-        { model: User, as: "sharedUsers"},
-        { model: Tag, as: "tags"},
+        { model: User, as: "sharedUsers", through: { attributes: [] } },
+        { model: Tag, as: "tags", through: { attributes: [] } },
 
       ]
     });
@@ -62,8 +62,8 @@ router.put("/:id", async (req, res) => {
       .map(({ id }) => id);
 
     // =========== update shared user list
-    // find all associated users to this note from UserNote
-    const usersToUpdate = await UserNote.findAll({
+    // find all associated users to this note from SharedUsers
+    const usersToUpdate = await SharedUsers.findAll({
       where: { note_id: req.params.id },
     });
     // get list of current user_ids
