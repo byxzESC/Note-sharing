@@ -38,7 +38,7 @@ router.get('/', (req, res) => {
     })
     .then(dbNoteData => {
         const notes = dbNoteData.map(note => note.get({plain:true}));
-        res.render('homepage', {
+        res.render('homepage.ejs', {
             notes,
             loggedIn: req.session.loggedIn
         })
@@ -88,7 +88,7 @@ router.get('/note/:id', (req,res) => {
 
         const note = dbNoteData.get({ plain: true })
 
-        res.render('/', {
+        res.render('/login.ejs', {
             note,
             loggedIn: req.session.loggedIn
         })
@@ -104,16 +104,20 @@ router.get('/login', (req, res) => {
         return
     }
 
-    res.render('login')
+    res.render('login.ejs', {
+        loggedIn: req.session.loggedIn
+    })
 })
 
-router.get('signUp', (req, res) => {
+router.get('/signUp', (req, res) => {
     if (req.session.loggedIn) {
         res.redirect('/')
         return
     }
 
-    res.render('signUp')
+    res.render('signUp', {
+        loggedIn: req.session.loggedIn
+    })
 })
 
 module.exports = router;
