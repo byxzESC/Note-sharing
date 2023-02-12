@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head') %>
+  </head>
+  <body>
+    <header class="display-flex justify-space-between align-center p-2">
+      <%- include('./partials/header'); %>
+    </header>
+    <main>
+      <%-
+      include(`./partials/quill/${type}`,{note:note,editCallback:"alert",loggedIn})
+      %>
+    </main>
+    <footer><%- include('./partials/footer') %></footer>
+  </body>
+</html>
