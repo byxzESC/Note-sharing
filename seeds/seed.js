@@ -45,13 +45,31 @@ connection.sync({ force: true }).then(async () => {
   }
 
   for (let i = 0; i < 10; i++) {
-    await models.Note.create({
+    let myTags = randomFromList(tags, Math.floor(Math.random() * tags.length));
+    console.log("Making user", i);
+    let note = await models.Note.create({
       title: faker.commerce.productName(),
       content: JSON.stringify([{ insert: faker.lorem.paragraph() }]),
       type: "text",
-      user_id: users[Math.floor(Math.random() * users.length)].id,
-      tags: randomFromList(tags, Math.floor(Math.random() * tags.length)),
+      owner_id: users[Math.floor(Math.random() * users.length)].id,
+      tags: myTags,
     });
+    for (let tag of myTags) {
+      await models.TagNote.create({
+        tag_id: tag.id,
+        note_id: note.id,
+      });
+    }
+    if (users.length > 1) {
+      let user = users[Math.floor(Math.random() * users.length)];
+      while (user.id === note.owner_id) {
+        user = users[Math.floor(Math.random() * users.length)];
+      }
+      await models.SharedUsers.create({
+        user_id: user.id,
+        note_id: note.id,
+      });
+    }
   }
   console.log("Seeding complete!");
   console.log("Users:");
