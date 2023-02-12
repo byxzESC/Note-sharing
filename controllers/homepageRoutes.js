@@ -88,7 +88,7 @@ router.get('/note/:id', (req,res) => {
 
         const note = dbNoteData.get({ plain: true })
 
-        res.render('/', {
+        res.render('/login', {
             note,
             loggedIn: req.session.loggedIn
         })
@@ -107,7 +107,7 @@ router.get('/login', (req, res) => {
     res.render('login')
 })
 
-router.get('signUp', (req, res) => {
+router.get('/signUp', (req, res) => {
     if (req.session.loggedIn) {
         res.redirect('/')
         return
