@@ -1,0 +1,16 @@
+<%const id = Math.random().toString(36).substring(2, 15);%>
+
+<div id="editor-<%- id %>"></div>
+<script type="json/text" id="content-<%- id %>">
+  <%- note.content %>
+</script>
+<script>
+  globalThis.editors = globalThis.editors || [];
+  if (globalThis.editorInitialized) {
+    loadEditor("#editor-<%- id %>", "#content-<%- id %>");
+  } else {
+    globalThis.editors.push(() => {
+      loadEditor("#editor-<%- id %>", "#content-<%- id %>",<%- editCallback || "()=>{}" %>);
+    });
+  }
+</script>
