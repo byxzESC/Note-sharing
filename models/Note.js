@@ -22,7 +22,7 @@ Note.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    user_id: {
+    owner_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
