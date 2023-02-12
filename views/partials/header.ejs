@@ -1,17 +1,18 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/">Note Sharing</a>
-    <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-        <a class="nav-link" href="/homepage">Home</a>
-        </li>
-        <% if (!LoggedIn) { %>
-         <li class="nav-item">
-            <a class="nav-link" href="/login">Login</a>
-         </li>
-        <% } else {%>
-            <li class="nav-item">
-                <a class="nav-link" href="/">Log out</a>
-            </li>
-        <% } %>
-    </ul>
+  <a class="navbar-brand" href="/">Note Sharing</a>
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+      <a class="nav-link" href="/">Home</a>
+    </li>
+    <% if (!loggedIn) { %>
+    <li class="nav-item">
+      <a class="nav-link" href="/login">Login</a>
+    </li>
+    <% } else {%>
+    <li class="nav-item">
+      <a class="nav-link" href="#" id="logout">Log out</a>
+      <script src="/logout.js"></script>
+    </li>
+    <% } %>
+  </ul>
 </nav>
