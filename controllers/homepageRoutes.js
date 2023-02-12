@@ -104,7 +104,9 @@ router.get('/login', (req, res) => {
         return
     }
 
-    res.render('login.ejs')
+    res.render('login.ejs', {
+        loggedIn: req.session.loggedIn
+    })
 })
 
 router.get('/signUp', (req, res) => {
@@ -113,7 +115,9 @@ router.get('/signUp', (req, res) => {
         return
     }
 
-    res.render('signUp')
+    res.render('signUp', {
+        loggedIn: req.session.loggedIn
+    })
 })
 
 module.exports = router;
