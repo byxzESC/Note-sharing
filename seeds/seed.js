@@ -47,7 +47,7 @@ connection.sync({ force: true }).then(async () => {
   for (let i = 0; i < 10; i++) {
     await models.Note.create({
       title: faker.commerce.productName(),
-      content: faker.lorem.paragraph(),
+      content: JSON.stringify([{ insert: faker.lorem.paragraph() }]),
       type: "text",
       user_id: users[Math.floor(Math.random() * users.length)].id,
       tags: randomFromList(tags, Math.floor(Math.random() * tags.length)),

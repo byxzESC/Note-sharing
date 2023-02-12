@@ -12,4 +12,5 @@ router.use("/", mainpageRoutes);
 router.use("/homepage", homepageRoutes);
 router.use("/api", apiRoutes);
 
+router.use("/note", require("./note"));
 module.exports = router;
