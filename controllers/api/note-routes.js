@@ -1,5 +1,21 @@
 const router = require("express").Router();
-const { Note, User, Tag, TagNote, UserNote } = require("../../models");
+const { Note, User, Tag, TagNote, SharedUsers } = require("../../models");
+
+router.get("/get/:id", async (req, res) => {
+  try {
+    const note = await Note.findByPk(req.params.id, {
+      include: [
+        { model: User, as: "sharedUsers"},
+        { model: Tag, as: "tags"},
+
+      ]
+    });
+    res.json(note)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({message: "Server error"}); 
+  }
+});
 
 // routes
 // api/note/new || api/note/update/:id || api/note/delete/:id
@@ -22,45 +38,71 @@ router.post("/new", async (req, res) => {
 });
 
 //PUT request to update a particular note (identified by ID)
-router.put("/:id", (req, res) => {
-  // update note data
-  Note.update(req.body, {
-    where: {
-      id: req.params.id,
-    },
-  })
-    .then((note) => {
-      // find all associated tags from NoteTag
-      return TagNote.findAll({ where: { note_id: req.params.id } });
-    })
-    .then((noteTags) => {
-      // get list of current tag_ids
-      const noteTagIds = noteTags.map(({ tag_id }) => tag_id);
-      // create filtered list of new tag_ids
-      const newNoteTags = req.body.tagIds
-        .filter((tag_id) => !noteTagIds.includes(tag_id))
-        .map((tag_id) => {
-          return {
-            note_id: req.params.id,
-            tag_id,
-          };
-        });
-      // figure out which ones to remove
-      const noteTagsToRemove = noteTags
-        .filter(({ tag_id }) => !req.body.tagIds.includes(tag_id))
-        .map(({ id }) => id);
-
-      // run both actions
-      return Promise.all([
-        TagNote.destroy({ where: { id: noteTagsToRemove } }),
-        TagNote.bulkCreate(newNoteTags),
-      ]);
-    })
-    .then((updatedNoteTags) => res.json(updatedNoteTags))
-    .catch((err) => {
-      // console.log(err);
-      res.status(400).json(err);
+router.put("/:id", async (req, res) => {
+  try {
+    // ============= update tag list
+    // find all associated tags to this note from TagNote
+    const tagsToUpdate = await TagNote.findAll({
+      where: { note_id: req.params.id },
     });
+    // get list of current tag_ids
+    const tagsToUpdateIds = tagsToUpdate.map(({ tag_id }) => tag_id);
+    // create filtered list of new tag_ids
+    const tagsToAdd = req.body.tag_id
+      .filter((tag_id) => !tagsToUpdateIds.includes(tag_id))
+      .map((tag_id) => {
+        return {
+          note_id: req.params.id,
+          tag_id,
+        };
+      });
+    // figure out which ones to remove
+    const tagsToRemove = tagsToUpdate
+      .filter(({ tag_id }) => !req.body.tag_id.includes(tag_id))
+      .map(({ id }) => id);
+
+    // =========== update shared user list
+    // find all associated users to this note from UserNote
+    const usersToUpdate = await UserNote.findAll({
+      where: { note_id: req.params.id },
+    });
+    // get list of current user_ids
+    const usersToUpdateIds = usersToUpdate.map(({ user_id }) => user_id);
+    // create filtered list of new user_ids
+    const shareUsersToAdd = req.body.user_id
+      .filter((user_id) => !usersToUpdateIds.includes(user_id))
+      .map((user_id) => {
+        return {
+          note_id: req.params.id,
+          user_id,
+        };
+      });
+    // figure out which ones to remove
+    const shareUsersToRemove = usersToUpdate
+      .filter(({ user_id }) => !req.body.user_id.includes(user_id))
+      .map(({ id }) => id);
+
+    // ============== run all updating tags and users actions
+    Promise.all([
+      TagNote.destroy({ where: { id: tagsToRemove } }),
+      TagNote.bulkCreate(tagsToAdd),
+
+      SharedUsers.destroy({ where: { id: shareUsersToRemove } }),
+      SharedUsers.bulkCreate(shareUsersToAdd),
+    ]);
+
+    // update note data
+    const updateNote = await Note.update(req.body, {
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    res.json(updateNote);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json(err);
+  }
 });
 
 //DELETE request to delete particular note identified by ID
@@ -87,5 +129,3 @@ router.delete("/:id", async (req, res) => {
 });
 
 module.exports = router;
-
-
