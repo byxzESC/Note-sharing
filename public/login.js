@@ -6,7 +6,7 @@ function logIn(e) {
     email: email,
     password: password,
   };
-  fetch("/api/users/login", {
+  fetch("/api/user/login", {
     method: "POST",
     body: JSON.stringify(data),
     headers: {
