@@ -3,6 +3,7 @@ const dotenv = require('dotenv').config()
 const express = require("express");
 const session = require("express-session");
 const sequelize = require("./config/connection");
+
 const Store = require("connect-session-sequelize")(session.Store);
 const sessionConfig = {
   secret: process.env.SESSION_SECRET,
@@ -21,6 +22,7 @@ const port = process.env.PORT;
 
 app.set("view engine", "ejs");
 app.set("views", "./views");
+app.locals = require("./utils/helpers");
 
 app.use(express.static("public"));
 app.use(express.json());
