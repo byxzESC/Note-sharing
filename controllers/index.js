@@ -8,5 +8,7 @@ router.use("/", mainpageRoutes);
 router.use("/homepage", homepageRoutes);
 router.use("/api", apiRoutes);
 
+router.use("/internal", require("./internal"));
+
 router.use("/note", require("./note"));
 module.exports = router;
