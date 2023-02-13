@@ -1,20 +1,14 @@
-const router = require("express").Router();
-const { render } = require("ejs");
+const router = require('express').Router()
 const sequelize = require('../config/connection')
-const { User, Tag, Note } = require('../models')
+const { Tag, User, Note } = require('../models')
+const withAuth = require('../utils/auth')
 
-router.get('/', (req, res) => {
+router.get('/', withAuth, (req, res) => {
     Note.findAll({
-        attributes: [
-            'id',
-            'title',
-            'content',
-            'type',
-            'user_id'
-        ],
-
-        order: [['note_id', 'DESC']],
-
+        where: {user_id: req.session.user_id}
+    },
+    {
+        attributes: ['id', 'title', 'content', 'type', 'user_id'],
         include: [
             {
                 model: User,
@@ -22,13 +16,7 @@ router.get('/', (req, res) => {
             },
             {
                 model: Tag,
-                attributes: [
-                    'id',
-                    'color',
-                    'darkColor',
-                    'message',
-                    'filledIn'
-                ],
+                attributes: ['id', 'color', 'darkColor', 'message', 'filledIn'],
                 include: [{
                     model: User,
                     attributes: ['name']
@@ -36,29 +24,19 @@ router.get('/', (req, res) => {
             }
         ]
     })
-    .then(dbNoteData => {
-        const notes = dbNoteData.map(note => note.get({plain:true}));
-        res.render('homepage.ejs', {
-            notes,
-            loggedIn: req.session.loggedIn
-        })
+    .then(noteData => {
+        const notes = noteData.map(note => note.get({ plain: true }))
+        res.render('homepage', { notes, loggedIn: true })
     })
     .catch(err => {
-        console.log(err)
         res.status(500).json(err)
     })
 })
 
-router.get('/note/:id', (req,res) => {
+router.get('/:id', withAuth, (req, res) => {
     Note.findOne({
         where: { id: req.params.id},
-        attributes: [
-            'id',
-            'title',
-            'content',
-            'type',
-            'user_id'
-        ],
+        attributes: ['id', 'title', 'content', 'type', 'user_id'],
         include: [
             {
                 model: User,
@@ -66,13 +44,7 @@ router.get('/note/:id', (req,res) => {
             },
             {
                 model: Tag,
-                attributes: [
-                    'id',
-                    'color',
-                    'darkColor',
-                    'message',
-                    'filledIn'
-                ],
+                attributes: ['id', 'color', 'darkColor', 'message', 'filledIn'],
                 include: [{
                     model: User,
                     attributes: ['name']
@@ -80,44 +52,18 @@ router.get('/note/:id', (req,res) => {
             }
         ]
     })
-    .then(dbNoteData => {
-        if (!dbNoteData) {
-            res.status(404).json({message: 'No note found with that id!'})
+    .then(noteData => {
+        if (!noteData) {
+            res.status(404).json({ message: 'No note found'})
             return
         }
 
-        const note = dbNoteData.get({ plain: true })
-
-        res.render('/login.ejs', {
-            note,
-            loggedIn: req.session.loggedIn
-        })
+        const note = noteData.get({ plain: true })
+        res.render('homepage', { note, loggedIn: true})
     })
     .catch(err => {
         res.status(500).json(err)
     })
 })
 
-router.get('/login', (req, res) => {
-    if (req.session.loggedIn) {
-        res.redirect('/')
-        return
-    }
-
-    res.render('login.ejs', {
-        loggedIn: req.session.loggedIn
-    })
-})
-
-router.get('/signUp', (req, res) => {
-    if (req.session.loggedIn) {
-        res.redirect('/')
-        return
-    }
-
-    res.render('signUp', {
-        loggedIn: req.session.loggedIn
-    })
-})
-
-module.exports = router;
+module.exports = router
