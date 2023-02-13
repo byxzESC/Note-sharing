@@ -2,7 +2,37 @@ const router = require("express").Router();
 const { Note, User, Tag, TagNote, SharedUsers } = require("../../models");
 
 // routes
-// api/note/new || api/note/update/:id || api/note/delete/:id
+// api/note/new || api/note/update/:id || api/note/delete/:id || api/note/all
+
+router.get('/all', async (req, res) => {
+  Note.findAll({
+      where: {user_id: req.session.user_id}
+  },
+  {
+      attributes: ['id', 'title', 'content', 'type', 'user_id'],
+      include: [
+          {
+              model: User,
+              attributes: ['name']
+          },
+          {
+              model: Tag,
+              attributes: ['id', 'color', 'darkColor', 'message', 'filledIn'],
+              include: [{
+                  model: User,
+                  attributes: ['name']
+              }]
+          }
+      ]
+  })
+  .then(noteData => {
+      const notes = noteData.map(note => note.get({ plain: true }))
+      res.json(notes);
+  })
+  .catch(err => {
+      res.status(500).json(err)
+  })
+})
 
 router.post("/new", async (req, res) => {
   try {
