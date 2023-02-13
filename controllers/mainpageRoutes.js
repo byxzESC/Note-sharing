@@ -104,7 +104,7 @@ router.get('/login', (req, res) => {
         return
     }
 
-    res.render('login', {
+    res.render('pages/auth', {
         loggedIn: req.session.loggedIn
     })
 })
