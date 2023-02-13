@@ -1,0 +1,60 @@
+<%- include("../partials/header") %>
+<script src="/login.js" defer></script>
+<article class="grid" data-visible="signin" id="login-root">
+	<div data-is="login">
+		<hgroup>
+			<h1>Login</h1>
+			<p>
+				enter an existing account
+			</p>
+		</hgroup>
+		<form id="login">
+			<label for="email1">
+				Email
+				<input type="text" id="email1" name="email" placeholder="someone@somthing.somewhere" required>
+			</label>
+			<label for="password1">
+				Password
+				<input type="password" id="password1" name="password" placeholder="password" required>
+			</label>
+			<label for="dummy" style="visibility: hidden;">
+				dummy
+				<input>
+			</label>
+			<button type="submit">Login</button>
+		</form>
+	</div>
+  <div data-is="signup">
+		<hgroup>
+			<h1>Sign Up</h1>
+			<p>
+				create a new account
+			</p>
+		</hgroup>
+		<form id="signup">
+			<label for="username">
+				Username
+				<input type="text" id="username" name="name" placeholder="FooBar123" required>
+			</label>
+			<label for="email2">
+				Email
+				<input type="text" id="email2" name="email" placeholder="someone@somthing.somewhere" required>
+			</label>
+			<label for="password2">
+				Password
+				<input type="password" id="password2" name="password" placeholder="password" required>
+			</label>
+			<button type="submit">Sign Up</button>
+		</form>
+	</div>
+</div>
+<dialog id="error" >
+  <article>
+    <header>
+      <a href="#" aria-label="Close" class="close"></a>
+      <span id="error-title"></span>
+    </header>
+    <p id="error-message"></p>
+  </article>
+</dialog>
+<%- include("../partials/footer") %>

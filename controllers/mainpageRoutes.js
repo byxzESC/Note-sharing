@@ -37,7 +37,8 @@ router.get('/', (req, res) => {
         ]
     })
     .then(dbNoteData => {
-        const notes = dbNoteData.map(note => note.get({plain:true}));
+        const notes = dbNoteData.map(note => note.get({ plain: true }));
+        console.log(req.session);
         res.render('homepage', {
             notes,
             loggedIn: req.session.loggedIn
@@ -104,7 +105,7 @@ router.get('/login', (req, res) => {
         return
     }
 
-    res.render('login', {
+    res.render('pages/auth', {
         loggedIn: req.session.loggedIn
     })
 })
