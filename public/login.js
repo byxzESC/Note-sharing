@@ -46,5 +46,21 @@ document.querySelector("#login").addEventListener("submit", logIn);
 
 
 function signUp(e) {
-  
+  e.preventDefault();
+  const data = Object.fromEntries(new FormData(e.target).entries());
+  fetch("/api/user", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  }).then(function (response) {
+    if (response.ok) {
+      document.location.replace("/");
+    } else {
+      showErrorMessage("Sign Up Failed", "Failed to create user.");
+    }
+  });
 }
+
+document.querySelector("#signup").addEventListener("submit", signUp);
