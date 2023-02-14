@@ -4,50 +4,9 @@ const sequelize = require('../config/connection')
 const { User, Tag, Note } = require('../models')
 
 router.get('/', (req, res) => {
-    Note.findAll({
-        attributes: [
-            'id',
-            'title',
-            'content',
-            'type',
-            'user_id'
-        ],
-
-        order: [['note_id', 'DESC']],
-
-        include: [
-            {
-                model: User,
-                attributes: ['name']
-            },
-            {
-                model: Tag,
-                attributes: [
-                    'id',
-                    'color',
-                    'darkColor',
-                    'message',
-                    'filledIn'
-                ],
-                include: [{
-                    model: User,
-                    attributes: ['name']
-                }]
-            }
-        ]
-    })
-    .then(dbNoteData => {
-        const notes = dbNoteData.map(note => note.get({ plain: true }));
-        console.log(req.session);
-        res.render('homepage', {
-            notes,
-            loggedIn: req.session.loggedIn
-        })
-    })
-    .catch(err => {
-        console.log(err)
-        res.status(500).json(err)
-    })
+   res.render('pages/landing', {
+    loggedIn: req.session.loggedIn
+   })
 })
 
 router.get('/note/:id', (req,res) => {
