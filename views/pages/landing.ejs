@@ -1,19 +1,24 @@
 <!DOCTYPE html>
-<html lang="en"  data-theme="dark">
-  <head>
+<html lang="en" data-theme="dark">
+
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Landing Page</title>
     <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
-  </head>
+</head>
 
-  <body>
+<body>
     <div class="landing">
         <div class="container">
-        <div class="container-fluid">
             <h1 class="contrast"><strong>Noteable</strong></h1>
-            <detail class="primary">"Say goodbye to cluttered notebooks and lost notes. With noteable, you can easily organize your thoughts and ideas in one convenient place. Whether you're jotting down ideas for a project, making a to-do list, or keeping track of important information, noteable has got you covered. With features like sharing between users, searching, and you'll never lose track of what's important again. Get noteable today and simplify your note-taking experience."</detail><hr>
+            <detail class="primary">"Say goodbye to cluttered notebooks and lost notes. With noteable, you can easily
+                organize your thoughts and ideas in one convenient place. Whether you're jotting down ideas for a
+                project, making a to-do list, or keeping track of important information, noteable has got you covered.
+                With features like sharing between users, searching, and you'll never lose track of what's important
+                again. Get noteable today and simplify your note-taking experience."</detail>
+            <hr>
             <div data-is="signup">
                 <h4>Sign Up Now</h4>
                 <form id="signup">
@@ -34,52 +39,55 @@
             </div>
         </div>
     </div>
-    </div>
-  </body>
+</body>
+
 </html>
 
 <style>
-  html,
-  body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-  }
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
 
-  .landing {
-    display: flex;
-    background-image: url("images/landing2.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    width: 100%;
-    height: 100vh;
-    line-height: 0;
-    margin: 0;
-  }
+    .landing {
+        display: flex;
+        background-image: url("images/landing.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100vh;
+        line-height: 0;
+        margin: 0;
+    }
 
-  .container {
-    width: 25%;
-    margin-right: 65%;
+    .container {
+        width: 35%;
+        float: left;
+        margin: 3% 1% 1% 3%;
+        line-height: 1;
+    }
 
-  }
+    @media only screen and (max-width: 992px) {
+        .container {
+            width: 100%;
+            float: none;
+            margin: 8% 16px 16px 3%;
+        }
+    }
 
-  .landing .container-fluid {
-    margin: 7% 0 0 3%;
-    line-height: 1;
-  }
+    .landing h1 {
+        text-align: center;
+        margin: 16px;
+    }
 
-  .landing h1 {
-    text-align: center;
-    margin: 16px;
-  }
+    .landing detail {
+        line-height: 1.5;
+        text-align: justify;
+    }
 
-  .landing detail {
-    line-height: 1.5;;
-    text-align: justify;
-  }
-
-  .landing h4 {
-    margin: 0 0 16px 0;
-  }
-
+    .landing h4 {
+        margin: 0 0 16px 0;
+    }
 </style>
