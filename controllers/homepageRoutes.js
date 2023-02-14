@@ -26,7 +26,7 @@ router.get('/', withAuth, (req, res) => {
     })
     .then(noteData => {
         const notes = noteData.map(note => note.get({ plain: true }))
-        res.render('homepage', { notes, loggedIn: true })
+        res.render('pages/home', { notes, loggedIn: true })
     })
     .catch(err => {
         res.status(500).json(err)
@@ -59,7 +59,7 @@ router.get('/:id', withAuth, (req, res) => {
         }
 
         const note = noteData.get({ plain: true })
-        res.render('homepage', { note, loggedIn: true})
+        res.render('pages/home', { note, loggedIn: true})
     })
     .catch(err => {
         res.status(500).json(err)
