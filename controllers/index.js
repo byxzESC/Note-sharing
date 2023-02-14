@@ -8,6 +8,12 @@ const mainpageRoutes = require('./mainpageRoutes');
     // note view    '/internal/doc'
     // note edit    '/internal/doc/edit'
     // login/signup 'auth'
+    //*************
+    // root          '/'
+    // login/sign    '/login'
+    // home          '/home'
+    // logout        '/'
+    // noteable      '/'
 
 router.use("/", mainpageRoutes);
 router.use("/api", apiRoutes);

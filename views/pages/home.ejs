@@ -1,16 +1,18 @@
 <%- include('../partials/header') %>
 
 <div>
-    <input type="search" id="search" name="search" placeholder="Search Tags">
-    <div class="icon">
-        <i class="bi bi-save" role="button"></i>
-    </div>
+    <form>
+        <input type="search" id="search" name="search" placeholder="Search Tags">
+        <button type="submit"><i class="bi bi-search" role="button"></i></button>
+    </form>
+
 </div>
 <br>
 <div class="parent">
     <div class="div1">
         <button href=""> + </button>
         <ul class="note-list">
+            <%- include('../partials/quill/render', { notes: notes }) %>
         </ul>
     </div>
     <div class="div2">
@@ -19,7 +21,8 @@
     </div>
 </div>
 
-<%- include('../partials/quill/render', { notes: notes }) %>
 
-  <script src="https://unpkg.com/quill@1.3.7/dist/quill.js"></script>
+
+  
 <%- include('../partials/footer') %>
+<script src="https://unpkg.com/quill@1.3.7/dist/quill.js"></script>

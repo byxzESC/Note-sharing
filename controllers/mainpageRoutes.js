@@ -4,7 +4,7 @@ const sequelize = require('../config/connection')
 const { User, Tag, Note } = require('../models')
 const withAuth = require('../utils/auth');
 // Grayce.Kerluke58 - Bailey9@hotmail.com - PCZn3SSr6JvkGoq
-router.get('/', async (req, res) => {
+router.get('/home', async (req, res) => {
     const notesData = await Note.findAll({
         //     where: {owner_id: req.session.userId}
         // },
@@ -73,7 +73,7 @@ router.get('/note/:id', (req,res) => {
 
         const note = dbNoteData.get({ plain: true })
 
-        res.render('/login', {
+        res.render('/home', {
             note,
             loggedIn: req.session.loggedIn
         })
@@ -85,7 +85,7 @@ router.get('/note/:id', (req,res) => {
 
 router.get('/login', (req, res) => {
     if (req.session.loggedIn) {
-        res.redirect('/');
+        res.redirect('/home');
         return;
     }
 
@@ -96,7 +96,7 @@ router.get('/login', (req, res) => {
 
 router.get('/signUp', (req, res) => {
     if (req.session.loggedIn) {
-        res.redirect('/')
+        res.redirect('/home')
         return
     }
 
@@ -105,7 +105,7 @@ router.get('/signUp', (req, res) => {
     })
 })
 
-router.get("/landing", (req, res) => {
+router.get("/", (req, res) => {
     res.render("pages/landing");
 })
 
