@@ -24,7 +24,7 @@ function searchByTag(e) {
   });
 }
 
-document.querySelector("").addEventListener("submit", searchByTag);
+document.querySelector("bi bi-search").addEventListener("submit", searchByTag);
 
 // you can access original objects using the item property in each result:
 // console.log(result[0].item);
