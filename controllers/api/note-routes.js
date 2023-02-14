@@ -70,17 +70,17 @@ router.put("/update/:id", async (req, res) => {
     // get list of current tag_ids
     const tagsToUpdateIds = tagsToUpdate.map(({ tag_id }) => tag_id);
     // create filtered list of new tag_ids
-    const tagsToAdd = req.body.tag_id
-      .filter((tag_id) => !tagsToUpdateIds.includes(tag_id))
-      .map((tag_id) => {
+    const tagsToAdd = req.body.tags
+      .filter((tag) => !tagsToUpdateIds.includes(tag.id))
+      .map((tag) => {
         return {
           note_id: req.params.id,
-          tag_id,
+          tag_id:tag.id,
         };
       });
     // figure out which ones to remove
     const tagsToRemove = tagsToUpdate
-      .filter(({ tag_id }) => !req.body.tag_id.includes(tag_id))
+      .filter(({ tag_id }) => !req.body.tags.find(tag=>tag.id===tag_id))
       .map(({ id }) => id);
 
     // =========== update shared user list
