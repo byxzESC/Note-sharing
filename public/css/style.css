@@ -15,5 +15,6 @@ html{
 	grid-row-gap: 10px;
 }
 
-.div2 { grid-area: 1 / 3 / 6 / 6 }
 .div1 { grid-area: 1 / 1 / 2 / 3 }
+.div2 { grid-area: 1 / 3 / 6 / 6 }
+
