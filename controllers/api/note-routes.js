@@ -5,40 +5,39 @@ const { Note, User, Tag, TagNote, SharedUsers } = require("../../models");
 // api/note/new || api/note/update/:id || api/note/delete/:id || api/note/all
 
 // ===== for testing
-// router.get('/all', async (req, res) => {
-//   Note.findAll({
-//   //     where: {owner_id: req.session.user_id}
-//   // },
-//   // {
-//     // attributes: ['id', 'title', 'content', 'type', 'owner_id'],
-//       attributes: ['title', 'content', 'type'],
-//       include: [
-//           {
-//               model: User,
-//               attributes: ['name'],
-//               as: 'owner',
-//           },
-//           {
-//               model: Tag,
-//               // attributes: ['id', 'color', 'darkColor', 'message', 'filledIn'],
-//               attributes: ['color', 'darkColor', 'message', 'filledIn'],
-//               // include: [{
-//               //     model: User,
-//               //     attributes: ['name']
-//               // }],
-//               as: 'tags'
-//           }
-//       ]
-//   })
-//   .then(noteData => {
-//       const notes = noteData.map(note => note.get({ plain: true }))
-//       res.json(notes);
-//   })
-//   .catch(err => {
-//     console.log(err);
-//       res.status(500).json(err)
-//   })
-// })
+router.get('/all', async (req, res) => {
+  Note.findAll({
+  //     where: {owner_id: req.session.user_id}
+  // },
+  // {
+    // attributes: ['id', 'title', 'content', 'type', 'owner_id'],
+      include: [
+          {
+              model: User,
+              attributes: ['name'],
+              as: 'owner',
+          },
+          {
+              model: Tag,
+              // attributes: ['id', 'color', 'darkColor', 'message', 'filledIn'],
+              attributes: ['color', 'darkColor', 'message', 'filledIn'],
+              // include: [{
+              //     model: User,
+              //     attributes: ['name']
+              // }],
+              as: 'tags'
+          }
+      ]
+  })
+  .then(noteData => {
+      const notes = noteData.map(note => note.get({ plain: true }))
+      res.json(notes);
+  })
+  .catch(err => {
+    console.log(err);
+      res.status(500).json(err)
+  })
+})
 
 router.post("/new", async (req, res) => {
   try {

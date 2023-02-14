@@ -1,28 +1,59 @@
 <%- include('../partials/header') %>
 
-<div>
+<div class="container-fluid" id="main-page">
+  <div class="search-field">
     <form>
-        <input type="search" id="search" name="search" placeholder="Search Tags">
-        <button type="submit"><i class="bi bi-search" role="button"></i></button>
+      <input
+        type="search"
+        id="search"
+        name="search"
+        placeholder="Search Tags"
+      />
+      <button type="submit"><i class="bi bi-search" role="button"></i></button>
     </form>
-
-</div>
-<br>
-<div class="parent">
+  </div>
+  <br />
+  <div class="parent">
     <div class="div1">
-        <button href=""> + </button>
-        <ul class="note-list">
-            <%- include('../partials/quill/render', { notes: notes }) %>
-        </ul>
+      <button href="">Add a note</button>
+      <ul class="note-list">
+        <% for (let i=0; i < notes.length; i++) { %>
+        <summary role="button" class="contrast note-title">
+          <%= notes[i].title %>
+        </summary>
+        <% } %>
+      </ul>
     </div>
     <div class="div2">
-        <textarea class="note-text" placeholder="Note"></textarea>
-        <textarea class="tag-text" placeholder="Tag"></textarea>
+      <textarea class="note-text" placeholder="Note"></textarea>
+      <textarea class="tag-text" placeholder="Tag"></textarea>
     </div>
+  </div>
 </div>
-
-
-
-  
-<%- include('../partials/footer') %>
+<script src="/public/editor.js"></script>
 <script src="https://unpkg.com/quill@1.3.7/dist/quill.js"></script>
+<%- include('../partials/footer') %>
+
+<!-- sample response
+    {
+      "title": "Electronic Frozen Ball",
+      "content": "Vitae velit mollitia in sunt minima laudantium natus quam. Sequi molestiae saepe. Autem accusantium nam optio perferendis at quisquam. Ipsa quo eveniet.",
+      "type": "text",
+      "owner": {
+          "name": "Mossie_White"
+      },
+      "tags": [
+          {
+              "color": "#583b3c",
+              "darkColor": "#16266b",
+              "message": "quantifying",
+              "filledIn": false,
+              "tag_note": {
+                  "id": 1,
+                  "tag_id": 8,
+                  "note_id": 1
+              }
+          }
+      ]
+  }, -->
+<!-- <p>< %= notes[0].tags[0].message%></p> -->

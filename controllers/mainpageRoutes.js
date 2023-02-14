@@ -10,7 +10,6 @@ router.get('/home', async (req, res) => {
         // },
         // {
           // attributes: ['id', 'title', 'content', 'type', 'owner_id'],
-            attributes: ['title', 'content', 'type'],
             include: [
                 {
                     model: User,
@@ -20,7 +19,7 @@ router.get('/home', async (req, res) => {
                 {
                     model: Tag,
                     // attributes: ['id', 'color', 'darkColor', 'message', 'filledIn'],
-                    attributes: ['color', 'darkColor', 'message', 'filledIn'],
+                    attributes: ['id', 'color', 'darkColor', 'message', 'filledIn'],
                     // include: [{
                     //     model: User,
                     //     attributes: ['name']
