@@ -80,4 +80,8 @@ router.get('/signUp', (req, res) => {
     })
 })
 
+router.get("/landing", (req, res) => {
+    res.render("pages/landing");
+  })
+
 module.exports = router;

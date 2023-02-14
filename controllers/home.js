@@ -12,6 +12,10 @@ router.get("/signup", (req, res) => {
   res.render("pages/auth", { loggedIn: req.session.loggedIn });
 });
 
+router.get("/landing", (req, res) => {
+  res.render("landing");
+})
+
 router.get("home", (req, res) => {
   res.render("pages/home", { loggedIn: req.session.loggedIn})
 })
