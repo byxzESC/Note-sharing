@@ -7,7 +7,7 @@ const SharedUsers = require("./SharedUsers");
 User.belongsToMany(Note, {
   foreignKey: "user_id",
   onDelete: "CASCADE",
-  as: "sharedUsers",
+  as: "visibleNotes",
   through: SharedUsers,
 });
 // Share notes
