@@ -2,11 +2,36 @@ const router = require("express").Router();
 const { render } = require("ejs");
 const sequelize = require('../config/connection')
 const { User, Tag, Note } = require('../models')
-
-router.get('/', (req, res) => {
-   res.render('pages/landing', {
-    loggedIn: req.session.loggedIn
-   })
+const withAuth = require('../utils/auth');
+// Grayce.Kerluke58 - Bailey9@hotmail.com - PCZn3SSr6JvkGoq
+router.get('/', async (req, res) => {
+    const notesData = await Note.findAll({
+        //     where: {owner_id: req.session.userId}
+        // },
+        // {
+          // attributes: ['id', 'title', 'content', 'type', 'owner_id'],
+            attributes: ['title', 'content', 'type'],
+            include: [
+                {
+                    model: User,
+                    attributes: ['name'],
+                    as: 'owner',
+                },
+                {
+                    model: Tag,
+                    // attributes: ['id', 'color', 'darkColor', 'message', 'filledIn'],
+                    attributes: ['color', 'darkColor', 'message', 'filledIn'],
+                    // include: [{
+                    //     model: User,
+                    //     attributes: ['name']
+                    // }],
+                    as: 'tags'
+                }
+            ]
+        })
+    const notes = notesData.map(note => note.get({ plain: true }));
+    console.log(notes);
+    res.render('pages/home', { notes, loggedIn: req.session.loggedIn} );
 })
 
 router.get('/note/:id', (req,res) => {
@@ -60,8 +85,8 @@ router.get('/note/:id', (req,res) => {
 
 router.get('/login', (req, res) => {
     if (req.session.loggedIn) {
-        res.redirect('/')
-        return
+        res.redirect('/');
+        return;
     }
 
     res.render('pages/auth', {
@@ -82,6 +107,6 @@ router.get('/signUp', (req, res) => {
 
 router.get("/landing", (req, res) => {
     res.render("pages/landing");
-  })
+})
 
 module.exports = router;

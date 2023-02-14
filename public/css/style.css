@@ -1,6 +1,11 @@
-html{
+html,
+body {
 	margin:0;
 	padding:0;
+}
+
+#main {
+  width: 100%;
 }
 
 .center-text{
@@ -25,3 +30,42 @@ html{
 	padding: 10px;
 }
 
+/* from brian */
+.tags {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+} */
+
+.user-notes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 5%;
+}
+
+.card {
+  flex-basis: calc(33.33% - 20px);
+  margin-bottom: 20px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 992px) {
+  .card {
+    flex-basis: calc(50% - 20px);
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .card {
+    flex-basis: 100%;
+  }
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  width: 100%;
+}

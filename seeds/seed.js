@@ -36,7 +36,7 @@ connection.sync({ force: true }).then(async () => {
   for (let i = 0; i < 10; i++) {
     tags.push(
       await models.Tag.create({
-        message: faker.commerce.productName(),
+        message: faker.hacker.ingverb(),
         color: faker.internet.color(),
         darkColor: faker.internet.color(),
         filledIn: Math.random() > 0.5,
@@ -49,7 +49,7 @@ connection.sync({ force: true }).then(async () => {
     console.log("Making user", i);
     let note = await models.Note.create({
       title: faker.commerce.productName(),
-      content: JSON.stringify([{ insert: faker.lorem.paragraph() }]),
+      content: faker.lorem.paragraph(),
       type: "text",
       owner_id: users[Math.floor(Math.random() * users.length)].id,
       tags: myTags,
