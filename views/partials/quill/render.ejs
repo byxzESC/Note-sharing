@@ -1,1 +1,45 @@
-<%-html(note)%>
+<div class=" user-notes">
+    <% for (let i=0; i < notes.length; i++) { %>
+      <details class="card">
+        <summary role="button" class="contrast">
+          <%= notes[i].title %>
+        </summary>
+        <div>
+          <small><%= notes[i].owner.name %></small>
+          <ul class="tag-list">
+            <%for (let j = 0; j < notes[i].tags.length; j++) { %>
+              <li><%= notes[i].tags[j].message%></li>
+            <% } %>
+			</ul>
+        </div>
+        <p><%= notes[i].content %></p>
+        <button class="outline contrast">Edit</button>
+      </details>
+      <% } %>
+  </div>
+
+  <!-- sample response
+  	{
+		"title": "Electronic Frozen Ball",
+		"content": "Vitae velit mollitia in sunt minima laudantium natus quam. Sequi molestiae saepe. Autem accusantium nam optio perferendis at quisquam. Ipsa quo eveniet.",
+		"type": "text",
+		"owner": {
+			"name": "Mossie_White"
+		},
+		"tags": [
+			{
+				"color": "#583b3c",
+				"darkColor": "#16266b",
+				"message": "quantifying",
+				"filledIn": false,
+				"tag_note": {
+					"id": 1,
+					"tag_id": 8,
+					"note_id": 1
+				}
+			}
+		]
+	}, -->
+  <!-- <p>< %= notes[0].tags[0].message%></p> -->
+
+  <!-- < %-html(notes)%> -->

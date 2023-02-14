@@ -3,7 +3,7 @@ const Fuse = require("fuse");
 function searchByTag(e) {
   e.preventDefault();
 
-  const searchInput = document.getElementById("").value;
+  const searchInput = document.getElementById("#search").value;
   const fuseOptions = {
     shouldSort: true,
     id: "userInput",
@@ -20,11 +20,11 @@ function searchByTag(e) {
     // search input should be a string
     const result = fuse.search(searchInput);
     // result contain all notes with searched tag
-    // 
+    // getting back note
   });
 }
 
-document.querySelector(" ").addEventListener("submit", searchByTag);
+document.querySelector("").addEventListener("submit", searchByTag);
 
 // you can access original objects using the item property in each result:
 // console.log(result[0].item);
@@ -49,3 +49,6 @@ document.querySelector(" ").addEventListener("submit", searchByTag);
 //     },
 //   },
 // ];
+
+
+

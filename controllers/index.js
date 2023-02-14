@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const apiRoutes = require("./api");
-const homepageRoutes = require("./homepageRoutes");
 const mainpageRoutes = require('./mainpageRoutes');
 
 // routes list
@@ -11,7 +10,6 @@ const mainpageRoutes = require('./mainpageRoutes');
     // login/signup 'auth'
 
 router.use("/", mainpageRoutes);
-router.use("/homepage", homepageRoutes);
 router.use("/api", apiRoutes);
 
 router.use("/internal", require("./internal"));

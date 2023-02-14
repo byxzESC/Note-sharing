@@ -1,65 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('../partials/header') %>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+<div>
+    <input type="search" id="search" name="search" placeholder="Search Tags">
+    <div class="icon">
+        <i class="bi bi-save" role="button"></i>
+    </div>
+</div>
+<br>
+<div class="parent">
+    <div class="div1">
+        <button href=""> + </button>
+        <ul class="note-list">
+        </ul>
+    </div>
+    <div class="div2">
+        <textarea class="note-text" placeholder="Note"></textarea>
+        <textarea class="tag-text" placeholder="Tag"></textarea>
+    </div>
+</div>
 
-  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
-  <link rel="stylesheet" href="/css/style.css" />
+<%- include('../partials/quill/render', { notes: notes }) %>
+
   <script src="https://unpkg.com/quill@1.3.7/dist/quill.js"></script>
-</head>
-
-<body>
-  <!-- sample response
-  	{
-		"title": "Electronic Frozen Ball",
-		"content": "Vitae velit mollitia in sunt minima laudantium natus quam. Sequi molestiae saepe. Autem accusantium nam optio perferendis at quisquam. Ipsa quo eveniet.",
-		"type": "text",
-		"owner": {
-			"name": "Mossie_White"
-		},
-		"tags": [
-			{
-				"color": "#583b3c",
-				"darkColor": "#16266b",
-				"message": "quantifying",
-				"filledIn": false,
-				"tag_note": {
-					"id": 1,
-					"tag_id": 8,
-					"note_id": 1
-				}
-			}
-		]
-	}, -->
-  <!-- <p><%= notes[0].tags[0].message%></p> -->
-
-  <div class=" user-notes">
-    <% for (let i=0; i < notes.length; i++) { %>
-      <details class="card">
-        <summary role="button" class="contrast">
-          <%= notes[i].title %>
-        </summary>
-        <div>
-          <small><%= notes[i].owner.name %></small>
-          <div class="tags">
-            <%for (let j = 0; j < notes[i].tags.length; j++) { %>
-              <p><%= notes[i].tags[j].message%></p>
-            <% } %>
-          </div>
-        </div>
-        <p><%= notes[i].content %></p>
-        <button class="outline contrast">Edit</button>
-      </details>
-      <% } %>
-  </div>
-
-
-
-  
-</body>
-
-</html>
+<%- include('../partials/footer') %>
