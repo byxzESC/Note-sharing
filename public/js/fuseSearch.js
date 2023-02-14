@@ -24,7 +24,12 @@ function searchByTag(e) {
   });
 }
 
-document.querySelector("bi bi-search").addEventListener("submit", searchByTag);
+function editNote(e) {
+  
+}
+
+document.querySelector("bi-search").addEventListener("submit", searchByTag);
+document.querySelector(".note-title").addEventListener("submit", editNote);
 
 // you can access original objects using the item property in each result:
 // console.log(result[0].item);
