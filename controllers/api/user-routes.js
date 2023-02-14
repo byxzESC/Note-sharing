@@ -58,6 +58,7 @@ router.post("/login", async (req, res) => {
       console.log("=======succeeded to log in======"); // log success message
       req.session.save(() => {
         req.session.loggedIn = true;
+        req.session.userId = userLogin.id;
 
         res
           .status(200)

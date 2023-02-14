@@ -1,0 +1,13 @@
+html[data-theme="dark"]{
+	background-color: rgb(17,25,32);
+	color:rgb(187,198,206);
+}
+html[data-theme="light"]{
+	background-color: #fff;
+	color:hsl(205deg, 20%, 32%);
+}
+
+html,body{
+	margin:0;
+	padding:0;
+}
