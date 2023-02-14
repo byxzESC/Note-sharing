@@ -34,7 +34,7 @@ function logIn(e) {
     body: JSON.stringify(data),
   }).then(function (response) {
     if (response.ok) {
-      document.location.replace("/");
+      document.location.replace("/home");
     } else {
       showErrorMessage("Login Failed", "Invalid username or password.");
     }
@@ -56,7 +56,7 @@ function signUp(e) {
     body: JSON.stringify(data),
   }).then(function (response) {
     if (response.ok) {
-      document.location.replace("/");
+      document.location.replace("/home");
     } else {
       showErrorMessage("Sign Up Failed", "Failed to create user.");
     }

@@ -1,18 +1,20 @@
 <%- include("../partials/header") %>
-<input type="search" id="search" name="search" placeholder="Search Tags">
-
+<div>
+    <input type="search" id="search" name="search" placeholder="Search Tags">
+    <div class="icon">
+        <i class="bi bi-save" role="button"></i>
+    </div>
+</div>
+<br>
 <div class="parent">
     <div class="div1">
-        
-        <button href="#"> + </button>
+        <button href=""> + </button>
+        <ul class="note-list">
+        </ul>
     </div>
     <div class="div2">
-        <iframe 
-            src="/internal/doc/?id={{docId}}"
-            title="notes"
-            width="600"
-            height="400">
-        </iframe>
+        <textarea class="note-text" placeholder="Note"></textarea>
+        <textarea class="tag-text" placeholder="Tag"></textarea>
     </div>
 </div>
  
