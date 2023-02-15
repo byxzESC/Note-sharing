@@ -9,7 +9,7 @@
 			"port": 3306,
 			"driver": "MySQL",
 			"name": "a",
-			"database": "notes_db",
+			"database": "note_db",
 			"username": "root",
 			"password": "dev1"
 		}
