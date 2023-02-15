@@ -3,7 +3,6 @@ const { Note, Tag, User } = require("../../models");
 const router = require("express").Router();
 
 async function userAllowedAccessToDoc(req, res, next) {
-	return next();
 	try {
 		const user = await User.findByPk(req.session.userId, {
 			include: [
