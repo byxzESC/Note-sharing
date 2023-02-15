@@ -20,10 +20,10 @@
 <script>
   globalThis.editors = globalThis.editors || [];
   if (globalThis.editorInitialized) {
-    loadEditor("#editor-<%- id %>", "#content-<%- id %>",<%- note.id %>);
+    loadEditor("#editor-<%- id %>", "#content-<%- id %>",<%-note.id%>);
   } else {
     globalThis.editors.push(() => {
-      loadEditor("#editor-<%- id %>", "#content-<%- id %>",<%- note.id  %>);
+      loadEditor("#editor-<%- id %>", "#content-<%- id %>",<%-note.id%>);
     });
   }
 </script>
