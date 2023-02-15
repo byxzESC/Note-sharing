@@ -3,6 +3,7 @@ const { Note, Tag, User } = require("../../models");
 const router = require("express").Router();
 
 async function userAllowedAccessToDoc(req, res, next) {
+	return next();
 	try {
 		const user = await User.findByPk(req.session.userId, {
 			include: [
@@ -46,11 +47,26 @@ async function userAllowedToViewDoc(req, res, next) {
 }
 
 router.get("/edit", userAllowedAccessToDoc, async (req, res) => { 
+
+	if (req.query.id === "new") {
+		const doc = await Note.create({
+			title: "Untitled",
+			content: "[]",
+			type: "text",
+			owner_id: req.session.userId,
+		});
+		return res.redirect("/internal/doc/edit?id=" + doc.id);
+	}
 	const doc = await Note.findByPk(req.query.id, {
 		include: [
 			{
 				model: Tag,
 				as:"tags"
+			},
+			{
+				model: User,
+				as: "sharedUsers",
+				attributes: ["id", "email", "name"],
 			}
 		]
 	});

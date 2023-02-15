@@ -5,6 +5,10 @@ const { User, Tag, Note } = require('../models')
 const withAuth = require('../utils/auth');
 // Grayce.Kerluke58 - Bailey9@hotmail.com - PCZn3SSr6JvkGoq
 router.get('/home', async (req, res) => {
+    if (!req.session.loggedIn) {
+        res.redirect('/login');
+        return;
+    }
     const user = await User.findByPk(req.session.userId, {
         include: [
             {

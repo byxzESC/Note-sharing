@@ -39,3 +39,35 @@ html,body{
 .edit:hover > a {
 	background-color: hsl(195deg, 85%, 50%);
 }
+
+input {
+	all:unset;
+	width:100%;
+	padding: 8px;
+	font-size: 36px;
+	cursor: text;
+	text-align: center;
+}
+input::before {
+	position: relative;
+	content: attr(data-placeholder);
+	color: hsl(205deg, 20%, 32%);
+}
+
+.header{
+	border-bottom: 1px solid hsl(205deg, 20%, 32%);
+}
+
+.editable{
+	cursor: pointer;
+}
+
+.tag.add::before{
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+	background-color: rgb(71, 143, 206);
+	display: inline-table;
+	text-align: center;
+	font-weight: 900;
+}

@@ -26,8 +26,8 @@ function loadEditor(mountId, dataId, id, onChange = console.log) {
   editor.on("text-change", () => {
     queueUpdate(id, {
       ...parsedData,
-      tags: parsedData.tags,
-      content: JSON.stringify(editor.getContents()),
+      tags: parsedData.tags.map(tag=>tag.id),
+      content: JSON.stringify(editor.getContents().ops),
     });
     // onChange(editor.getContents());
   });
