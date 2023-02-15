@@ -5,18 +5,13 @@ class TagNote extends Model {}
 
 TagNote.init(
   {
-    id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true,
-    },
     tag_id: {
       type: DataTypes.INTEGER,
       references: {
         model: "tag",
         key: "id",
       },
+      primaryKey: true,
     },
     note_id: {
       type: DataTypes.INTEGER,
@@ -24,6 +19,7 @@ TagNote.init(
         model: "note",
         key: "id",
       },
+      primaryKey: true,
     },
   },
   {

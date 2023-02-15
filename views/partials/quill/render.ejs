@@ -1,1 +1,10 @@
+
+<h1><%=note.title%></h1>
+<div>
+	<%note.tags.forEach(tag => {%>
+		<%console.log(tag)%>
+		<span class="tag" data-content="<%=tag.message%>" data-color="<%=tag.color%>" data-color2="<%=tag.darkColor%>" data-theme="<%=theme%>"></span>
+	<%})%>
+</div>
+
 <%-html(note)%>
