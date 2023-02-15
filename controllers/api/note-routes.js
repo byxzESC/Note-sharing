@@ -1,44 +1,50 @@
 const router = require("express").Router();
+const sequelize = require("../../config/connection");
 const { Note, User, Tag, TagNote, SharedUsers } = require("../../models");
 
 // routes
 // api/note/new || api/note/update/:id || api/note/delete/:id || api/note/all
 
 // ===== for testing
-// router.get('/all', async (req, res) => {
-//   Note.findAll({
-//   //     where: {owner_id: req.session.user_id}
-//   // },
-//   // {
-//     // attributes: ['id', 'title', 'content', 'type', 'owner_id'],
-//       attributes: ['title', 'content', 'type'],
-//       include: [
-//           {
-//               model: User,
-//               attributes: ['name'],
-//               as: 'owner',
-//           },
-//           {
-//               model: Tag,
-//               // attributes: ['id', 'color', 'darkColor', 'message', 'filledIn'],
-//               attributes: ['color', 'darkColor', 'message', 'filledIn'],
-//               // include: [{
-//               //     model: User,
-//               //     attributes: ['name']
-//               // }],
-//               as: 'tags'
-//           }
-//       ]
-//   })
-//   .then(noteData => {
-//       const notes = noteData.map(note => note.get({ plain: true }))
-//       res.json(notes);
-//   })
-//   .catch(err => {
-//     console.log(err);
-//       res.status(500).json(err)
-//   })
-// })
+router.get('/all', async (req, res) => {
+  Note.findAll({
+  //     where: {owner_id: req.session.user_id}
+  // },
+  // {
+    // attributes: ['id', 'title', 'content', 'type', 'owner_id'],
+      attributes: ['title', 'content', 'type'],
+      include: [
+        {
+            model: User,
+            attributes: ['name'],
+            as: 'owner',
+        },
+        {
+          model: User,
+          as: "sharedUsers",
+          attributes: ['id', 'email', 'name'],
+        },
+        {
+            model: Tag,
+            // attributes: ['id', 'color', 'darkColor', 'message', 'filledIn'],
+            attributes: ['color', 'darkColor', 'message', 'filledIn'],
+            // include: [{
+            //     model: User,
+            //     attributes: ['name']
+            // }],
+            as: 'tags'
+        }
+      ]
+  })
+  .then(noteData => {
+      const notes = noteData.map(note => note.get({ plain: true }))
+      res.json(notes);
+  })
+  .catch(err => {
+    console.log(err);
+      res.status(500).json(err)
+  })
+})
 
 router.post("/new", async (req, res) => {
   try {
@@ -70,19 +76,22 @@ router.put("/update/:id", async (req, res) => {
     // get list of current tag_ids
     const tagsToUpdateIds = tagsToUpdate.map(({ tag_id }) => tag_id);
     // create filtered list of new tag_ids
-    const tagsToAdd = req.body.tag_id
-      .filter((tag_id) => !tagsToUpdateIds.includes(tag_id))
-      .map((tag_id) => {
+    console.log(req.body.tags)
+    const tagsToAdd = req.body.tags
+      .filter((tag) => !tagsToUpdateIds.includes(tag.id))
+      .map((tag) => {
         return {
-          note_id: req.params.id,
-          tag_id,
+          id:sequelize.DEFAULT,
+          note_id: +req.params.id,
+          tag_id: tag.id,
         };
       });
     // figure out which ones to remove
     const tagsToRemove = tagsToUpdate
-      .filter(({ tag_id }) => !req.body.tag_id.includes(tag_id))
+      .filter(({ tag_id }) => !req.body.tags.find(tag=>tag.id===tag_id))
       .map(({ id }) => id);
 
+    console.log({tagsToAdd,tagsToRemove})
     // =========== update shared user list
     // find all associated users to this note from SharedUsers
     const usersToUpdate = await SharedUsers.findAll({
@@ -91,30 +100,32 @@ router.put("/update/:id", async (req, res) => {
     // get list of current user_ids
     const usersToUpdateIds = usersToUpdate.map(({ user_id }) => user_id);
     // create filtered list of new user_ids
-    const shareUsersToAdd = req.body.user_id
-      .filter((user_id) => !usersToUpdateIds.includes(user_id))
-      .map((user_id) => {
+    const shareUsersToAdd = req.body.sharedUsers
+      .filter((user) => !usersToUpdateIds.includes(user.id))
+      .map((user) => {
         return {
-          note_id: req.params.id,
-          user_id,
+          note_id: +req.params.id,
+          user_id: user.id,
         };
       });
     // figure out which ones to remove
     const shareUsersToRemove = usersToUpdate
-      .filter(({ user_id }) => !req.body.user_id.includes(user_id))
-      .map(({ id }) => id);
+      .filter(({ user_id }) => -1 === req.body.sharedUsers.findIndex(su => su.id === user_id));
 
     // ============== run all updating tags and users actions
-    Promise.all([
-      TagNote.destroy({ where: { id: tagsToRemove } }),
+    await Promise.all([
+      TagNote.destroy({ where: { note_id:+req.params.id ,tag_id:tagsToRemove } }),
       TagNote.bulkCreate(tagsToAdd),
 
-      SharedUsers.destroy({ where: { id: shareUsersToRemove } }),
+      ...shareUsersToRemove.map(link=>link.destroy()),
       SharedUsers.bulkCreate(shareUsersToAdd),
     ]);
 
     // update note data
-    const updateNote = await Note.update(req.body, {
+    const updateNote = await Note.update({
+      title: req.body.title,
+      content: req.body.content,
+    }, {
       where: {
         id: req.params.id,
       },

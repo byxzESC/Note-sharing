@@ -5,18 +5,13 @@ class SharedUsers extends Model {}
 
 SharedUsers.init(
   {
-    id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true,
-    },
     user_id: {
       type: DataTypes.INTEGER,
       references: {
         model: "user",
         key: "id",
       },
+      primaryKey: true,
     },
     note_id: {
       type: DataTypes.INTEGER,
@@ -24,6 +19,7 @@ SharedUsers.init(
         model: "note",
         key: "id",
       },
+      primaryKey: true,
     },
   },
   {
