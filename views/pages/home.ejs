@@ -11,7 +11,9 @@
 <div class="parent">
     <div class="div1">
         <% for(const note of notes){%>
-            <button class="secondary" data-id="<%= note.id%>"> <%= note.title %> </button>
+                 <button class="secondary" data-id="<%= note.id%>"> <%= note.title%> 
+                 <span class="delbtn" role="button" type="submit">X</span>
+            </button>
         <%}%>
         <button class="create-new"> Create A new Note </button>
     </div>
@@ -26,7 +28,4 @@
     </div>
 </div>
 
-
-
-  
 <%- include('../partials/footer') %>

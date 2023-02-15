@@ -44,5 +44,18 @@ function ticking() {
 		resizeIframe(iframe);
 	}
 }
+const delBtn = document.querySelectorAll('.delbtn')
 
 setInterval(ticking, 10);
+
+function removal(e){
+    e.preventDefault();
+    fetch("/api/note/delete/id" + e.parentElement.getAttribute("data-id"), {
+        method: "DELETE"
+    })
+    e.target.remove();
+}
+
+delBtn.forEach(
+    button => button.addEventListener("click", removal)
+)

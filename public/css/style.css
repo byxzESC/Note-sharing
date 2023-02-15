@@ -81,6 +81,11 @@ iframe[src] + article{
   display: none;
 } 
 
+.delbtn {
+  width: 15%;
+  float: right;
+  margin: 0px;
+}
 iframe + article{
   text-align: center;
   width:100%;
