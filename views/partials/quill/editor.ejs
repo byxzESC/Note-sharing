@@ -4,12 +4,15 @@
   <input type="text" name="title" id="title" value="<%- note ? note.title : "" %>" placeholder="Unknown Note"/>
 </label>
 <h3 class="header">Tags</h3>
-<% console.log(note) %>
-<div class="tags">
-  <% for(const tag of note.tags){ %>
-    <span class="tag editable" data-content="<%=tag.message%>" data-color="<%=tag.color%>" data-color2="<%=tag.darkColor%>" data-theme="<%=theme%>"></span>
-  <% } %>
-  <span class="tag add" data-content="✏️" data-color="blue" data-color2="blue" data-theme="dark"></span>
+<div>
+  <span class="tags" id="tags">
+    <% for(const tag of note.tags){ %>
+      <span class="tag editable" data-content="<%=tag.message%>" data-color="<%=tag.color%>" data-color2="<%=tag.darkColor%>" data-theme="<%=theme%>" data-id="<%=tag.id%>"></span>
+    <% } %>
+  </span>
+  <form id="add-tag">
+    <input name="tagName" id="tag-input" placeholder="✏️">
+  </form>
 </div>
 <br/>
 <div id="editor-<%- id %>" ></div>
