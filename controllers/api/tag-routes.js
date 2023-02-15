@@ -10,7 +10,7 @@ router.post('/new', async (req, res) => {
             filledIn: req.body.filledIn
         })
 
-        res.status(200).json(newTag.get({plain: true}))
+        res.status(200).json(newTag)
     } catch (err) {
         res.status(500).json(err)
     }
