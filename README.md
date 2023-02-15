@@ -52,17 +52,32 @@ To install necessary dependencies, run the following command:
 
 ## Usage
 
-Step 1: 
+Step 1: Sign up for an account, here is the [link](https://ancient-hollows-85855.herokuapp.com/)
 
-
-
-Step 2: 
-
-
+Step 2: Create your notes, and add tags to them for tracking.
 
 example:
 
 ![example](./public/images/example.JPG)
+
+Here is what happening in diagrams perspective: 
+
+![MCV flow picture](./public/images/MCV%20flow.png)
+
+Here is simplicity view of models and relationships: 
+
+![models & relationships](./public/images/Models%26relation.JPG)
+
+## Team Members Info
+
+The groups github links:
+
+[Milton Ly](https://github.com/MiltonLy)
+
+[Brian Zhao](https://github.com/byxzESC)
+
+[Ian Senne](https://github.com/IanSSenne)
+
 
 ## License
 
@@ -75,3 +90,7 @@ N/A
 ## Tests
 
 N/A
+
+## Credit
+
+All this coding made possible by [Jerome Chenette](https://github.com/jeromechenette) and our fellow students who help each other along the way
