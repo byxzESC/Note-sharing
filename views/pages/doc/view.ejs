@@ -8,6 +8,7 @@
   <title>Note Sharing</title>
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css" /> -->
   <link rel="stylesheet" href="/css/doc.css" />
+	<link rel="stylesheet" href="/css/tag.css" />
   <!-- quill js  -->
   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
 	<% if(theme === "dark" || !theme){ %>
@@ -18,9 +19,15 @@
 			}
 		</style>
 	<% } %>
+  <!-- bootstrap icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 </head>
 
 <body>
+	<div class="edit">
+		<a class="secondary edit-btn" href="/internal/doc/edit?id=<%=doc.id%>&theme=<%=theme%>"><i class="bi bi-pencil-fill"></i>
+		</a>
+	</div>
 	<%- include("../../partials/quill/render",{note:doc}) %>
 </body>
 </html>
