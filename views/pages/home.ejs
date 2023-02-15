@@ -1,5 +1,5 @@
 <%- include('../partials/header') %>
-
+<script src="/home.js" defer></script>
 <div>
     <form>
         <input type="search" id="search" name="search" placeholder="Search Tags">
@@ -10,19 +10,30 @@
 <br>
 <div class="parent">
     <div class="div1">
-        <button href=""> + </button>
-        <ul class="note-list">
-            <%- include('../partials/quill/render', { notes: notes }) %>
-        </ul>
+        <% for(const note of notes){%>
+                 <button class="secondary" data-id="<%= note.id%>"> <%= note.title%> 
+                 <span class="delbtn" role="button" type="submit">X</span>
+            </button>
+            
+        <%}%>
+        <button class="create-new"> Create A new Note </button>
     </div>
     <div class="div2">
-        <textarea class="note-text" placeholder="Note"></textarea>
-        <textarea class="tag-text" placeholder="Tag"></textarea>
+        <iframe id="note"></iframe>
+        <article>
+            <h1>Nothing here :(</h1>
+            <p>Click on a note to view it</p>
+            <p>- or -</p>
+            <button class="create-new"> Create A new Note </button>
+        </article>
     </div>
 </div>
 
-
-
-  
 <%- include('../partials/footer') %>
-<script src="https://unpkg.com/quill@1.3.7/dist/quill.js"></script>
+<script>
+    const x = document.querySelector("delbtn")
+
+    function deleteNote(x) {
+
+    }
+</script>

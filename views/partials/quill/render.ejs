@@ -1,22 +1,12 @@
-<div class=" user-notes">
-    <% for (let i=0; i < notes.length; i++) { %>
-      <details class="card">
-        <summary role="button" class="contrast">
-          <%= notes[i].title %>
-        </summary>
-        <div>
-          <small><%= notes[i].owner.name %></small>
-          <ul class="tag-list">
-            <%for (let j = 0; j < notes[i].tags.length; j++) { %>
-              <li><%= notes[i].tags[j].message%></li>
-            <% } %>
-			</ul>
-        </div>
-        <p><%= notes[i].content %></p>
-        <button class="outline contrast">Edit</button>
-      </details>
-      <% } %>
-  </div>
+<h1><%=note.title%></h1>
+<div>
+	<%note.tags.forEach(tag => {%>
+		<%console.log(tag)%>
+		<span class="tag" data-content="<%=tag.message%>" data-color="<%=tag.color%>" data-color2="<%=tag.darkColor%>" data-theme="<%=theme%>"></span>
+	<%})%>
+</div>
+
+<%-html(note)%>
 
   <!-- sample response
   	{
