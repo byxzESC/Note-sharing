@@ -42,12 +42,14 @@ Here is the [deploy link](https://ancient-hollows-85855.herokuapp.com/)
 - [License](#license)
 - [Contributing](#contributing)
 - [Tests](#tests)
-- [Questions](#questions)
 
 ## Installation
 
 To install necessary dependencies, run the following command: 
 
+    run mysql -u root -p
+    source db/schema.sql;
+    quit
     npm install  
 
 ## Usage
@@ -81,7 +83,14 @@ The groups github links:
 
 ## License
 
-N/A
+/*
+ * ----------------------------------------------------------------------------
+ * "THE BEER-WARE LICENSE" (Revision 42):
+ * <phk@FreeBSD.ORG> wrote this file.  As long as you retain this notice you
+ * can do whatever you want with this stuff. If we meet some day, and you think
+ * this stuff is worth it, you can buy me a beer in return.   Notable Team
+ * ----------------------------------------------------------------------------
+ */
 
 ## How to Contribute
 
