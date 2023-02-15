@@ -1,17 +1,32 @@
 <%const id = Math.random().toString(36).substring(2, 15);%>
-
-<div id="editor-<%- id %>"></div>
+<link href="/css/tag.css" rel="stylesheet" />
+<label for="title">
+  <input type="text" name="title" id="title" value="<%- note ? note.title : "" %>" placeholder="Unknown Note"/>
+</label>
+<h3 class="header">Tags</h3>
+<div>
+  <span class="tags" id="tags">
+    <% for(const tag of note.tags){ %>
+      <span class="tag editable" data-content="<%=tag.message%>" data-color="<%=tag.color%>" data-color2="<%=tag.darkColor%>" data-theme="<%=theme%>" data-id="<%=tag.id%>"></span>
+    <% } %>
+  </span>
+  <form id="add-tag">
+    <input name="tagName" id="tag-input" placeholder="✏️">
+  </form>
+</div>
+<br/>
+<div id="editor-<%- id %>" ></div>
 <% if(note){ %>
 <script type="json/text" id="content-<%- id %>">
-  <%- note.content %>
+  <%- JSON.stringify(note) %>
 </script>
 <script>
   globalThis.editors = globalThis.editors || [];
   if (globalThis.editorInitialized) {
-    loadEditor("#editor-<%- id %>", "#content-<%- id %>");
+    loadEditor("#editor-<%- id %>", "#content-<%- id %>",<%-note.id%>);
   } else {
     globalThis.editors.push(() => {
-      loadEditor("#editor-<%- id %>", "#content-<%- id %>",<%- editCallback || "()=>{}" %>);
+      loadEditor("#editor-<%- id %>", "#content-<%- id %>",<%-note.id%>);
     });
   }
 </script>
@@ -22,10 +37,10 @@
 <script>
   globalThis.editors = globalThis.editors || [];
   if (globalThis.editorInitialized) {
-    loadEditor("#editor-<%- id %>", "#content-<%- id %>");
+    loadEditor("#editor-<%- id %>", "#content-<%- id %>",-1);
   } else {
     globalThis.editors.push(() => {
-      loadEditor("#editor-<%- id %>", "#content-<%- id %>",<%- editCallback || "()=>{}" %>);
+      loadEditor("#editor-<%- id %>", "#content-<%- id %>",-1);
     });
   }
 </script>

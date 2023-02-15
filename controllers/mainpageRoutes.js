@@ -5,29 +5,25 @@ const { User, Tag, Note } = require('../models')
 const withAuth = require('../utils/auth');
 // Grayce.Kerluke58 - Bailey9@hotmail.com - PCZn3SSr6JvkGoq
 router.get('/home', async (req, res) => {
-    const notesData = await Note.findAll({
-        //     where: {owner_id: req.session.userId}
-        // },
-        // {
-          // attributes: ['id', 'title', 'content', 'type', 'owner_id'],
-            include: [
-                {
-                    model: User,
-                    attributes: ['name'],
-                    as: 'owner',
-                },
-                {
-                    model: Tag,
-                    // attributes: ['id', 'color', 'darkColor', 'message', 'filledIn'],
-                    attributes: ['id', 'color', 'darkColor', 'message', 'filledIn'],
-                    // include: [{
-                    //     model: User,
-                    //     attributes: ['name']
-                    // }],
-                    as: 'tags'
-                }
-            ]
-        })
+    if (!req.session.loggedIn) {
+        res.redirect('/login');
+        return;
+    }
+    const user = await User.findByPk(req.session.userId, {
+        include: [
+            {
+                model: Note,
+                as: "notes",
+                attributes: ["id",'title'],
+            },
+            {
+                model: Note,
+                as: "visibleNotes",
+                attributes: ["id",'title'],
+            },
+        ],
+    });
+    const notesData = [...user.notes, ...user.visibleNotes];
     const notes = notesData.map(note => note.get({ plain: true }));
     console.log(notes);
     res.render('pages/home', { notes, loggedIn: req.session.loggedIn} );

@@ -1,0 +1,9 @@
+span.tag::before{
+	content:attr(data-content);
+	display:inline-block;
+	color: attr(data-color);
+	background-color: gray;;
+	position:relative;
+	padding: 5px;
+	border-radius: 5px;
+}
