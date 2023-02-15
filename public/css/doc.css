@@ -80,3 +80,10 @@ input::before {
 #add-tag input{
 	all:unset;
 }
+
+.user-notes {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin: 5%;
+  }

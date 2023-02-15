@@ -4,6 +4,12 @@ body {
 	padding:0;
 }
 
+nav a .contrast {
+  font-size: larger;
+  font-family: monospace;
+  font-weight: 700;
+}
+
 #main {
   width: 100%;
 }

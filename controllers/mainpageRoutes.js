@@ -3,7 +3,7 @@ const { render } = require("ejs");
 const sequelize = require("../config/connection");
 const { User, Tag, Note } = require("../models");
 const withAuth = require("../utils/auth");
-// Grayce.Kerluke58 - Bailey9@hotmail.com - PCZn3SSr6JvkGoq
+
 router.get('/home', async (req, res) => {
     if (!req.session.loggedIn) {
         res.redirect('/login');
@@ -119,4 +119,3 @@ router.get("/", async (req, res) => {
 });
 
 module.exports = router;
-// Henri_Pfannerstill37@yahoo.com - 9N681sCc_UIk76H
