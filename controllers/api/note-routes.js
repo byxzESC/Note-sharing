@@ -1,5 +1,4 @@
 const router = require("express").Router();
-const sequelize = require("../../config/connection");
 const { Note, User, Tag, TagNote, SharedUsers } = require("../../models");
 
 // routes
@@ -12,28 +11,22 @@ router.get('/all', async (req, res) => {
   // },
   // {
     // attributes: ['id', 'title', 'content', 'type', 'owner_id'],
-      attributes: ['title', 'content', 'type'],
       include: [
-        {
-            model: User,
-            attributes: ['name'],
-            as: 'owner',
-        },
-        {
-          model: User,
-          as: "sharedUsers",
-          attributes: ['id', 'email', 'name'],
-        },
-        {
-            model: Tag,
-            // attributes: ['id', 'color', 'darkColor', 'message', 'filledIn'],
-            attributes: ['color', 'darkColor', 'message', 'filledIn'],
-            // include: [{
-            //     model: User,
-            //     attributes: ['name']
-            // }],
-            as: 'tags'
-        }
+          {
+              model: User,
+              attributes: ['name'],
+              as: 'owner',
+          },
+          {
+              model: Tag,
+              // attributes: ['id', 'color', 'darkColor', 'message', 'filledIn'],
+              attributes: ['color', 'darkColor', 'message', 'filledIn'],
+              // include: [{
+              //     model: User,
+              //     attributes: ['name']
+              // }],
+              as: 'tags'
+          }
       ]
   })
   .then(noteData => {
@@ -76,22 +69,19 @@ router.put("/update/:id", async (req, res) => {
     // get list of current tag_ids
     const tagsToUpdateIds = tagsToUpdate.map(({ tag_id }) => tag_id);
     // create filtered list of new tag_ids
-    console.log(req.body.tags)
-    const tagsToAdd = req.body.tags
-      .filter((tag) => !tagsToUpdateIds.includes(tag.id))
-      .map((tag) => {
+    const tagsToAdd = req.body.tag_id
+      .filter((tag_id) => !tagsToUpdateIds.includes(tag_id))
+      .map((tag_id) => {
         return {
-          id:sequelize.DEFAULT,
-          note_id: +req.params.id,
-          tag_id: tag.id,
+          note_id: req.params.id,
+          tag_id,
         };
       });
     // figure out which ones to remove
     const tagsToRemove = tagsToUpdate
-      .filter(({ tag_id }) => !req.body.tags.find(tag=>tag.id===tag_id))
+      .filter(({ tag_id }) => !req.body.tag_id.includes(tag_id))
       .map(({ id }) => id);
 
-    console.log({tagsToAdd,tagsToRemove})
     // =========== update shared user list
     // find all associated users to this note from SharedUsers
     const usersToUpdate = await SharedUsers.findAll({
@@ -100,32 +90,30 @@ router.put("/update/:id", async (req, res) => {
     // get list of current user_ids
     const usersToUpdateIds = usersToUpdate.map(({ user_id }) => user_id);
     // create filtered list of new user_ids
-    const shareUsersToAdd = req.body.sharedUsers
-      .filter((user) => !usersToUpdateIds.includes(user.id))
-      .map((user) => {
+    const shareUsersToAdd = req.body.user_id
+      .filter((user_id) => !usersToUpdateIds.includes(user_id))
+      .map((user_id) => {
         return {
-          note_id: +req.params.id,
-          user_id: user.id,
+          note_id: req.params.id,
+          user_id,
         };
       });
     // figure out which ones to remove
     const shareUsersToRemove = usersToUpdate
-      .filter(({ user_id }) => -1 === req.body.sharedUsers.findIndex(su => su.id === user_id));
+      .filter(({ user_id }) => !req.body.user_id.includes(user_id))
+      .map(({ id }) => id);
 
     // ============== run all updating tags and users actions
-    await Promise.all([
-      TagNote.destroy({ where: { note_id:+req.params.id ,tag_id:tagsToRemove } }),
+    Promise.all([
+      TagNote.destroy({ where: { id: tagsToRemove } }),
       TagNote.bulkCreate(tagsToAdd),
 
-      ...shareUsersToRemove.map(link=>link.destroy()),
+      SharedUsers.destroy({ where: { id: shareUsersToRemove } }),
       SharedUsers.bulkCreate(shareUsersToAdd),
     ]);
 
     // update note data
-    const updateNote = await Note.update({
-      title: req.body.title,
-      content: req.body.content,
-    }, {
+    const updateNote = await Note.update(req.body, {
       where: {
         id: req.params.id,
       },

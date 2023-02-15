@@ -49,7 +49,7 @@ connection.sync({ force: true }).then(async () => {
     console.log("Making user", i);
     let note = await models.Note.create({
       title: faker.commerce.productName(),
-      content: JSON.stringify([{ insert: faker.lorem.paragraph() }]),
+      content: faker.lorem.paragraph(),
       type: "text",
       owner_id: users[Math.floor(Math.random() * users.length)].id,
       tags: myTags,
